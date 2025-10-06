@@ -48,7 +48,7 @@ install_nix(){
 }
 install_direnv(){
 	if ! command -v direnv &>/dev/null; then
-		local pm =$1
+		local pm=$1
 		case "$pm" in 
 			apt) sudo apt-get install -y direnv ;;
 			dnf) sudo dnf install -y direnv ;;
