@@ -11,15 +11,6 @@ main() {
 	echo "using $pacman"
 	install_misc "$pacman"
 	install_nix
-
-	echo "Loading Nix environment..."
-	if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
-    	. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-	elif [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
-    	. "$HOME/.nix-profile/etc/profile.d/nix.sh"
-	else
-    	echo "Warning: could not find Nix profile script. You may need to restart your shell."
-	fi
 	enable_nix_features
 	install_direnv "$pacman"
 	add_hook
