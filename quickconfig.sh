@@ -101,7 +101,7 @@ main "$@"
 mkdir minipekka
 cd minipekka
 touch .envrc
-echo "nix develop" > .envrc
+echo "use flake ." > .envrc
 direnv allow
 curl -O https://raw.githubusercontent.com/Phil-OS/redflake/refs/heads/main/flake.nix
 
