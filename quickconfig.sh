@@ -20,6 +20,7 @@ main() {
 	else
     	echo "Warning: could not find Nix profile script. You may need to restart your shell."
 	fi
+	enable_nix_features
 	install_direnv "$pacman"
 	add_hook
 	
@@ -55,6 +56,24 @@ install_nix(){
 		echo "nix already installed"
 	fi
 }
+
+enable_nix_features() {
+    echo "Enabling experimental Nix features (nix-command flakes)..."
+
+    # System-wide config (multi-user install)
+    if [ -w /etc/nix/nix.conf ]; then
+        if ! grep -q "experimental-features" /etc/nix/nix.conf 2>/dev/null; then
+            echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf >/dev/null
+        fi
+    else
+        # Per-user config (single-user install fallback)
+        mkdir -p "$HOME/.config/nix"
+        if ! grep -q "experimental-features" "$HOME/.config/nix/nix.conf" 2>/dev/null; then
+            echo "experimental-features = nix-command flakes" >> "$HOME/.config/nix/nix.conf"
+        fi
+    fi
+}
+
 install_direnv(){
 	if ! command -v direnv &>/dev/null; then
 		local pm=$1
